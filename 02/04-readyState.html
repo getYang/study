@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var xhr = new XMLHttpRequest(); // 对象刚创建，ajax的状态值为 0
+
+        // 当ajax的状态值，发生改变的时候，会触发下面的事件
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                console.log(this.response);
+            }
+        }
+
+        xhr.open('GET', '/common/time');
+        xhr.send();
+        
+    </script>
+</body>
+</html>

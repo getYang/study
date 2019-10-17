@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>cache =-- 缓存</title>
+</head>
+
+<body>
+    <input type="button" value="发生请求">
+
+    <script>
+
+        document.querySelector('input').onclick = function () {
+            var xhr = new XMLHttpRequest();
+            // xhr.open('GET', '/common/time?sdf=' + Math.random());
+            xhr.open('GET', '/common/time?s=' + Date.now());
+            xhr.send();
+            xhr.onload = function () {
+                console.log(this.response);
+            }
+        }
+
+        /*
+        /common/time   -->   165844555555 --> IE浏览器收到这个时间戳，会把它保存到客户端
+        /common/time   -->   165844555555
+        */
+
+
+    </script>
+</body>
+
+</html>

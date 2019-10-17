@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./assets/nprogress.css">
+</head>
+<body>
+    <input type="text" id="username">
+    <span></span>
+    <p style="display: none">玩命加载中...</p>
+
+    <script src="./assets/jquery.js"></script>
+    <script src="./assets/nprogress.js"></script>
+    <script>
+        // 1. 找到input输入框，注册失去焦点事件
+        $('input').blur(function () {
+            // 2. 获取输入框的值
+            var uname = $(this).val();
+            if (uname === '') {
+                alert('不能为空');
+                return;
+            }
+            // 3. 发送Ajax请求，验证账号是否可用
+            $.ajax({
+                type: 'GET',
+                url: '/common/checkUser',
+                data: {username: uname},
+                dataType: 'json',
+                success: function (r) {
+                    console.log(r);
+                    // JSON.parse(r);
+                    // 4. 给出提示即可
+                    $('span').text(r.msg);
+                },
+                beforeSend: function () {
+                    NProgress.start();
+                },
+                complete: function () {
+                    NProgress.done();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

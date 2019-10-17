@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        xhr.open('GET', '/address/getInfo');
+        xhr.responseType = 'json'; // 响应数据类型
+        xhr.send();
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                console.log(this.response);
+            }
+        }
+    </script>
+</body>
+</html>

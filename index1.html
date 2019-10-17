@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>微博留言评论系统</title>
+  <link rel="stylesheet" href="css/weibo.css">
+</head>
+
+<body>
+  <div class="w">
+    
+    <!-- 展示的内容区域 -->
+    <div class="contentList">
+      <ul>
+
+      </ul>
+    </div>
+
+    <!-- 操作的界面区域 -->
+    <div class="controls">
+        <img src="images/tip.png" alt=""><br>
+        <input type="text" id="username" placeholder="你的昵称是...">
+        <textarea placeholder="说点什么吧..." id="area" cols="30" rows="6" maxlength="200"></textarea>
+        <div>
+          <span class="useCount">0</span>
+          <span>/</span>
+          <span>200</span>
+          <button id="send">发布</button>
+        </div>
+      </div>
+  </div>
+  <!-- <script src="js/weibo.js"></script> -->
+  <script src="./assets/template-web.js"></script>
+  <script id="moban" type="text/html">
+    {{each arr}}
+    <li>
+      <div class="info"><img src="images/03.jpg"><span>{{$value.name}}</span>
+        <p>发布于：{{$value.created}}</p>
+      </div>
+      <div class="content">{{$value.content}}</div>
+    </li>
+    {{/each}}
+  </script>
+  <script>
+    function loadData() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/message/getMsg');
+      xhr.responseType = 'json';
+      xhr.send(null);
+      xhr.onload = function () {
+        console.log(this.response);
+        document.querySelector('ul').innerHTML = template('moban', { arr: this.response });
+      }
+    }
+    loadData();
+
+  </script>
+  <script>
+    var username = document.getElementById('username');
+    var area = document.getElementById('area');
+    area.oninput = function () {
+      document.querySelector('.useCount').innerHTML = this.value.length;
+    }
+
+    document.getElementById('send').onclick = function () {
+      // 判断
+      if (!/^[\w\u4e00-\u9fa5]{1,10}$/.test(username.value.trim())) {
+        alert('用户名长度范围为1到10字符');
+        return;
+      }
+      if (!/^.{1,200}$/.test(area.value.trim())) {
+        alert('留言内容长度范围为1到200字符');
+        return;
+      }
+      // alert('ok');
+      var xhr2 = new XMLHttpRequest();
+      xhr2.open('POST', '/message/addMsg');
+      xhr2.responseType = 'json';
+      xhr2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      xhr2.send(`name=${username.value.trim()}&content=${area.value.trim()}`);
+      xhr2.onload = function () {
+        if (this.response.result) {
+          loadData();
+          username.value = area.value = '';
+        } else {
+          alert(this.response.msg);
+        }
+      }
+    }
+  </script>
+
+</body>
+
+</html>

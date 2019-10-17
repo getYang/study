@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function abc (fn) {
+            setTimeout(function () {
+                var x = 1;
+                // a = x; // 1秒钟之后，给a赋值，值就是x的值
+                // 1秒钟之后，调用fn函数，并且把x的值，交给fn函数处理
+                fn(x); // 调用函数，传递实参
+            }, 1000);
+        }
+        // 需求：需要在abc函数之外，获取到x的值
+
+        
+        abc(function (res) {
+            console.log(res + 2); // 处理结果
+        });
+    </script>
+</body>
+</html>

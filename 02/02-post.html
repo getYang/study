@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. 创建xhr对象
+        var xhr = new XMLHttpRequest();
+        // 2. 调用open方法，设置请求方式和url
+        xhr.open('POST', '/message/addMsg');
+        // 3. 设置一个请求头，固定的一行代码。它是意思是告知服务器，浏览器给服务器提交的数据是什么格式
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');   
+        // 4. 调用send，发送请求
+        xhr.send('name=xxx&content=xxx');
+        // 5. 设置onload事件，接收服务器相应的结果
+        xhr.onload = function () {
+            console.log(this.response);
+        }
+    </script>
+</body>
+</html>

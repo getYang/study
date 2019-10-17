@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 3. 由死变活，把代码中写的比较“死”的地方，变得灵活一点，其实就是设置成函数的形参
+        function ajax(type, url, data) {
+            var ajax = new XMLHttpRequest();
+
+            var params = null;
+            // 判断是否是GET方式
+            if (type === 'GET') {
+                // 把url和data拼接到一起，形成 /common/checkUser?username=xxx
+                url = url + '?' + data;
+            }
+            ajax.open(type, url);
+
+            // 判断是GET还是POST请求
+            if (type === 'POST') {
+                ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                // 重置 aaaaa = data
+                params = data;
+            }
+
+            ajax.send(params);
+            ajax.onload = function() {
+                console.log(this.response)
+            }
+        }
+
+        ajax('GET', '/common/checkUser', 'username=zhgangs'); // 验证用户名
+        ajax('POST', '/message/addMsg', 'name=xxx&content=yyy'); // 添加留言
+    </script>
+</body>
+
+</html>

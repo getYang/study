@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.log(111);
+
+        // 耗时操作，不会影响后续代码的执行；转义的来，就是不会阻塞后续代码的执行
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/common/time');
+        xhr.send();
+        xhr.onload = function () {
+            console.log(333);
+        }
+
+        console.log(222);
+    </script>
+</body>
+</html>

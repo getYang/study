@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <input type="file" id='pic' multiple accept=".jpg,.png,.gif"> -->
+    <input type="file" id='pic' multiple accept="image/*">
+
+    <input type="button" value="获取文件对象" id="btn">
+
+    <script>
+        document.getElementById('btn').onclick = function () {
+            var pic = document.getElementById('pic');
+            // console.log(pic);
+            console.dir(pic);
+            var fileObj = pic.files[0]; // 找到文件对象
+        }
+    </script>
+</body>
+</html>

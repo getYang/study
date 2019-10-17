@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <span>收货地址：</span>
+
+    <select id="sheng">
+        
+    </select>
+
+    <select id="shi">
+        <option value="0">--请选择市--</option>
+    </select>
+
+    <select id="xian">
+        <option value="0">--请选择区县--</option>
+    </select>
+
+
+    <script>
+        /*************************** 获取省 *******************************/
+        // 页面刷新，马上获取所有的省
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/address/getInfo?id=0');
+        xhr.send();
+        xhr.onload = function() {
+            // console.log(this.response);
+            // 把JSON格式转成对象
+            var res = JSON.parse(this.response);
+            // console.log(res);
+            // 定义空字符串，准备拼接 '<option>'
+            var str = '<option value="0">--请选择省--</option>';
+            // 遍历数组 res.data 它才是数组。遍历的过程中，不断拼接 option
+            res.data.forEach(function(item) {
+                str += `<option value="${item.id}">${item.cn_name}</option>`;
+            });
+            // 遍历之后，把拼接好的所有option放到select中
+            document.getElementById('sheng').innerHTML = str;
+
+
+        }
+    </script>
+
+    <script>
+        /********************** 当省改变的时候，获取对应的市 *************************/
+        document.getElementById('sheng').onchange = function() {
+            var id = this.value;
+            // console.log(id); // 当前省的id
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open('GET', '/address/getInfo?id=' + id);
+            xhr2.send();
+            xhr2.onload = function() {
+                // console.log(this.response);
+                // 把JSON格式转成对象
+                var res = JSON.parse(this.response);
+                // console.log(res);
+                // 定义空字符串，准备拼接 '<option>'
+                var str = '<option value="0">--请选择市--</option>';
+                // 遍历数组 res.data 它才是数组。遍历的过程中，不断拼接 option
+                res.data.forEach(function(item) {
+                    str += `<option value="${item.id}">${item.cn_name}</option>`;
+                });
+                // 遍历之后，把拼接好的所有option放到select中
+                document.getElementById('shi').innerHTML = str;
+            }
+        }
+    </script>
+
+
+    <script>
+        /********************** 当市改变的时候，获取对应的区 *************************/
+        document.getElementById('shi').onchange = function() {
+            var id = this.value;
+            // console.log(id); // 当前市的id
+            var xhr3 = new XMLHttpRequest();
+            xhr3.open('GET', '/address/getInfo?id=' + id);
+            xhr3.send();
+            xhr3.onload = function() {
+                // console.log(this.response);
+                // 把JSON格式转成对象
+                var res = JSON.parse(this.response);
+                // console.log(res);
+                // 定义空字符串，准备拼接 '<option>'
+                var str = '<option value="0">--请选择区县--</option>';
+                // 遍历数组 res.data 它才是数组。遍历的过程中，不断拼接 option
+                res.data.forEach(function(item) {
+                    str += `<option value="${item.id}">${item.cn_name}</option>`;
+                });
+                // 遍历之后，把拼接好的所有option放到select中
+                document.getElementById('xian').innerHTML = str;
+
+            }
+        }
+    </script>
+</body>
+
+</html>

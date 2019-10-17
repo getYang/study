@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="css/weibo.css">
+</head>
+
+<body>
+  <div class="w">
+
+    <!-- 展示的内容区域 -->
+    <div class="contentList">
+      <ul>
+        
+      </ul>
+    </div>
+
+    <!-- 操作的界面区域 -->
+    <div class="controls">
+      <img src="images/tip.png" alt=""><br>
+      <input type="text" id="username" placeholder="你的昵称是...">
+      <textarea placeholder="说点什么吧..." id="area" cols="30" rows="6" maxlength="200"></textarea>
+      <div>
+        <span class="useCount">0</span>
+        <span>/</span>
+        <span>200</span>
+        <button type="button" id="send">发布</button>
+      </div>
+    </div>
+  </div>
+
+  <script src=".//assets/jquery.js"></script>
+  <script>
+    function loadData () {
+      // 刷新页面，应该马上发送ajax请求，获取所有的留言数据
+      $.ajax({
+        type: 'GET',
+        url: '/message/getMsg',
+        dataType: 'json',
+        success: function (res) {
+          console.log(res);
+          var str = '';
+          // 遍历数组
+          $.each(res, function (i, v) {
+            // 拼接所有的li
+            // str += '<li>aaaa</li>';
+            str += `<li>
+                      <div class="info"><img src="images/03.jpg"><span>${v.name}</span>
+                        <p>发布于：${v.created}</p>
+                      </div>
+                      <div class="content">${v.content}</div>
+                    </li>`;
+          });
+          // console.log(str);
+          // 把拼接好的三个li放到ul中
+          $('ul').html(str);
+        }
+      });
+    }
+    // 页面刷新，首先调用一次函数，保证页面中有数据才行
+    loadData();
+  </script>
+
+
+  <script>
+    // ------------------------添加留言---------------------------------
+    // 1. 给 发布 注册单击事件
+    $('#send').click(function () {
+      // 2. 获取输入框的值（留言人的名字、内容）
+      var name = $('#username').val();
+      var content = $('#area').val();
+      // 3. 调用接口，套 $.ajax() 方法
+      $.ajax({
+        type: 'POST',
+        url: '/message/addMsg',
+        data: {
+          name: name,
+          content: content
+        },
+        dataType: 'json',
+        success: function (r) {
+          // console.log(r);
+          // 4. 添加成功，应该不刷新页面的情况下，立即显示新的留言，并清空输入框的值；添加失败，给出提示
+          if (r.result) {
+            // 成功
+            loadData(); // 调用loadData，从新获取所有数据（包含新的数据）
+            $('#username').val('');
+            $('#area').val('');
+          } else {
+            // 失败
+            alert(r.msg);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

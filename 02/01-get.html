@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 原生的Ajax请求，使用的是 XMLHttpRequest 对象提供的API（属性和方法）
+
+        /* // 1. 实例化 XMLHttpRequest 对象，request单词的意思是请求
+        var xhr = new XMLHttpRequest();
+        // 2. 调用open方法，设置请求的方式和url
+        xhr.open('GET', '/common/time');
+        // 3. 调用send方法，发送请求   ---> 到这一步，才表示发送ajax请求
+        xhr.send();
+        // 4. 当请求响应过程结束，然后接收服务器响应的结果
+        xhr.onload = function () {
+            console.log(xhr.response);
+        } */
+
+
+
+
+        ///////////////////////////////////////////
+        // 如果有请求参数
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/common/checkUser?username=lisi');
+        xhr.send();
+        xhr.onload = function () {
+            console.log(this.response);
+        }
+    </script>
+</body>
+</html>

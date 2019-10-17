@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <form id="fm" action="01-callback.html" method="POST"> -->
+    <form id="fm">
+        <input type="text" name="user"><br>
+        <input type="password" name="pwd"><br>
+        <input type="radio" name="sex" value="男" checked>男
+        <input type="radio" name="sex" value="女">女<br>
+        <input type="file" name="pic"><br />
+        <input type="button" id="btn" value="提交">
+    </form>
+
+    <script>
+        // 上述模拟一个注册功能
+        // 点击按钮的时候，需要将用户输入的值，提交给服务器的接口 /common/fd
+
+        document.getElementById('btn').onclick = function (e) {
+            // e.preventDefault(); // 阻止表单提交
+            // 1. 收集用户输入的值
+            // 使用FormData步骤1： 找到form表单，找表单的dom对象
+            var fm = document.getElementById('fm');
+            // 使用FormData步骤2： 实例化FormData，并传递表单即可，得到的对象里面包含了所有的值
+            var formdata = new FormData(fm);
+
+
+            // 2. 将这些值，ajax提交给接口
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/common/fd');
+            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(formdata);
+            xhr.onload = function () {
+                // 接收到的数据应该是发送到服务器的数据
+                console.log(this.response);
+            }
+        }
+    </script>
+</body>
+
+</html>

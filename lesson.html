@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Study</title>
+</head>
+
+<body>
+    <input type="text">
+    <span></span>
+
+    <script src="./assets/jquery.js"></script>
+    <script>
+        // 1. 注册 input的失去焦点事件
+        $('input').blur(function() {
+            var uname = $(this).val(); // 获取输入框中的值
+            // 2. 发送ajax请求，验证用户名
+            $.ajax({
+                type: 'GET',
+                url: '/common/checkUser',
+                data: {
+                    username: uname
+                },
+                // data: 'username=' + uname, // username=xxx
+                dataType: 'json',
+                success: function(result) {
+                    console.log(result);
+                    // 3. 在span标签中给出提示
+                    $('span').text(result.msg);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

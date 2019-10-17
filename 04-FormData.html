@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <input type="text" id="user"><br>
+    <input type="password" id="pwd"><br>
+    <input type="file" id="pic"><br/>
+    <input type="button" id="btn" value="提交">
+
+
+    <script>
+        // 点击按钮的时候，获取用户输入的值，并且把所有的值提交给 /common/fd
+        document.getElementById('btn').onclick = function () {
+            var formdata = new FormData();
+            // console.log(formdata);
+            // formdata.append('key', 'value');
+            formdata.append('aa', document.getElementById('user').value);
+            formdata.append('pwd', document.getElementById('pwd').value);
+            formdata.append('pic', document.getElementById('pic').files[0]);
+            // console.log(formdata);
+            // console.log(formdata.get('aa'));
+
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/common/fd');
+            xhr.send(formdata);
+            xhr.onload = function () {
+                console.log(this.response)
+            }
+        }
+    </script>
+</body>
+</html>

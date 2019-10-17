@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <p>hello</p>
+    <script>
+
+        
+
+        console.log(111);
+
+        // 耗时操作，并且open的第三个参数为false，表示是一个同步的ajax请求，会阻塞后续所有代码的执行
+        var xhr = new XMLHttpRequest();
+
+        
+        xhr.open('GET', '/common/time', false);
+        xhr.send();
+
+        xhr.onload = function () {
+            console.log(333);
+        }
+
+        document.body.onclick = function () {
+            alert(123);
+        }
+
+        console.log(222);
+    </script>
+</body>
+</html>

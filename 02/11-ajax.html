@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. 写一套正确的代码，能够正常执行，能够正常发送ajax请求即可
+        /* var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/common/time');
+        xhr.send();
+        xhr.onload = function () {
+            console.log(this.response)
+        } */
+
+
+        // 2. 写function，把写好的代码，放到function内部
+        /* function ajax () {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/common/time');
+            xhr.send();
+            xhr.onload = function () {
+                console.log(this.response)
+            }
+        }
+
+        ajax(); */
+
+
+
+        // 3. 由死变活，把代码中写的比较“死”的地方，变得灵活一点，其实就是设置成函数的形参
+        function ajax (type, url) {
+            var xhr = new XMLHttpRequest();
+            xhr.open(type, url);
+            xhr.send();
+            xhr.onload = function () {
+                console.log(this.response)
+            }
+        }
+
+        // ajax('GET', '/common/time');
+        ajax('GET', '/common/checkUser');
+    </script>
+</body>
+</html>
